@@ -40,12 +40,12 @@ public class SecurityConfig{
     protected UserDetailsService userDetailsService() {
         UserDetails adminUser = User.withUsername("Kailash@123")
                 .password("Kailash123")
-                .roles("ROLE_ADMIN")
+                .roles("ADMIN")
                 .build();
 
         UserDetails normalUser = User.withUsername("Omkar@123")
                 .password("omkar123")
-                .roles("ROLE_NORMAL")
+                .roles("NORMAL")
                 .build();
 
         return new InMemoryUserDetailsManager(normalUser,adminUser);
