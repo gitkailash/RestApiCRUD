@@ -13,6 +13,6 @@ public class User {
     private String firstName;
     private String lastName;
     private String username;
-    @Column(name = "password")
     private String password;
+    private String roles;
 }

@@ -37,6 +37,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) {
+        if (user.getRoles()==null){
+            user.setRoles("ROLE_NORMAL");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         log.info("User save successfully");
         return userRepo.save(user);
@@ -49,8 +52,8 @@ public class UserServiceImpl implements UserService {
             log.error("User Search Error for id "+ id);
             throw new UserNotFoundException("User Not Found.");
         }else {
-            log.info("blog Post delete successful.");
-            userRepo.deleteById(id);
+            log.info("User delete successful.");
+            userRepo.delete(user.get());
         }
     }
 
@@ -62,7 +65,10 @@ public class UserServiceImpl implements UserService {
             userPersistent.setFirstName(user.getFirstName());
             userPersistent.setLastName(user.getLastName());
             userPersistent.setUsername(user.getUsername());
-            userPersistent.setPassword(user.getPassword());
+            userPersistent.setPassword(passwordEncoder.encode(user.getPassword()));
+            if(user.getRoles()==null){
+                userPersistent.setRoles(userPersistent.getRoles());
+            }else userPersistent.setRoles(user.getRoles());
             userRepo.save(userPersistent);
             log.info("user update for id " + id);
             return userPersistent;
